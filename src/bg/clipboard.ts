@@ -1,23 +1,23 @@
 //type document;
 
-type element = {
-  value: string;
-  select: () => void;
-};
+// type element = {
+//   value: string;
+//   select: () => void;
+// };
 
 //declare var document: document;
-declare function get_element_by_id(
-  doc: Document,
-  id: string
-): element;
-declare function exec_command(doc: Document, command: string): boolean;
+// declare function get_element_by_id(
+//   doc: Document,
+//   id: string
+// ): element;
+// declare function exec_command(doc: Document, command: string): boolean;
 
 export class Clipboard {
-  static write(value: string): void {
-    let textarea = get_element_by_id(document, "ta");
+  static write(document: Document, value: string): void {
+    const textarea = document.getElementById("ta") as HTMLInputElement; // FIXME
     textarea.value = value;
     textarea.select();
-    if (!exec_command(document, "copy")) {
+    if (!document.execCommand("copy")) {
       throw new Error("fail to write clipboard");
     }
   }

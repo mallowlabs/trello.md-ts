@@ -59,7 +59,7 @@ let copy_to_clipboard = (tab: chrome.tabs.Tab) => {
       return Promise.resolve(ListWithCard.make({ lists, cards, members }));
     })
     .then((x: any) => Promise.resolve(Markdown.format(x)))
-    .then(Clipboard.write)
+    .then((s: string) => Clipboard.write(document, s))
     .then(() => {
       chrome.pageAction.setIcon({
         tabId: tab.id || 0,
