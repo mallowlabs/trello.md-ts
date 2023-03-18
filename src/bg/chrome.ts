@@ -22,7 +22,7 @@ namespace PageAction {
   }
 
   export namespace OnClicked {
-    export function add_listener(callback: (tab: Tabs.tab) => void): void {
+    export function add_listener(callback: (tab: chrome.tabs.Tab) => void): void {
       return chrome.pageAction.onClicked.addListener(callback);
     }
   }

@@ -1,65 +1,71 @@
-import { sprintf } from "sprintf-js";
+import { CardActionType, CardType } from "./card";
+import { MemberType } from "./member";
 
-let h1 = (buffer: Buffer, title: string): void => {
-  buffer.addString("# " + title + "\n\n");
-};
-let h2 = (buffer: Buffer, title: string): void => {
-  buffer.addString("## " + title + "\n\n");
-};
-let quote = (buffer: Buffer, text: string): void => {
-  let s = text.replace(/\n/g, "\n> ");
-  buffer.addString("> " + s + "\n\n");
-};
+export class Markdown {
 
-let avatarUrl = (hash: string): string =>
-  sprintf("https://trello-avatars.s3.amazonaws.com/%s/30.png", hash);
+  static h1 = (buffer: Buffer, title: string): void => {
+    buffer.write("# " + title + "\n\n");
+  };
+  static h2 = (buffer: Buffer, title: string): void => {
+    buffer.write("## " + title + "\n\n");
+  };
+  static quote = (buffer: Buffer, text: string): void => {
+    let s = text.replace(/\n/g, "\n> ");
+    buffer.write("> " + s + "\n\n");
+  };
 
-let avatar = (member: any): string => {
-  let hash = member.avatarHash ?? null;
-  return hash
-    ? sprintf("![%s](%s)", member.username, avatarUrl(hash))
-    : member.username;
-};
+  static avatarUrl = (hash: string): string =>
+    `https://trello-avatars.s3.amazonaws.com/${hash}/30.png`;
 
-let attachment = (obj: any): string => {
-  let url = obj.url ?? "";
-  return sprintf("![%s](%s)", obj.name, url);
-};
+  static avatar = (member: any): string => {
+    let hash = member.avatarHash ?? null;
+    return hash
+      ? `![${member.username}](${this.avatarUrl(hash)})`
+      : member.username;
+  };
 
-let regexp = /_$/;
+  static attachment = (obj: any): string => {
+    let url = obj.url ?? "";
+    return `![${obj.name}](${url})`;
+  };
 
-let accept = (name: string): boolean => {
-  let except = regexp.test(name);
-  return !except;
-};
+  static regexp = /_$/;
 
-let format = (xs: any[]): string => {
-  let buffer = Buffer.alloc(0);
-  xs.forEach(({ list, cards }) => {
-    if (accept(list.name)) {
-      h1(buffer, list.name);
-      cards.forEach(({ card, members, actions }) => {
-        let card_members = members.map(avatar).join(" ");
+  static accept = (name: string): boolean => {
+    let except = this.regexp.test(name);
+    return !except;
+  };
 
-        h2(
-          buffer,
-          sprintf("[:link:](%s) %s %s", card.url, card.name, card_members)
-        );
-        quote(buffer, card.desc);
-        actions.forEach(([action, member]) => {
-          quote(buffer, "----");
-          if (member) {
-            quote(buffer, sprintf("%s %s", avatar(member), action.date));
-          }
-          if (action.data.text) {
-            quote(buffer, action.data.text);
-          }
-          if (action.data.attachment) {
-            quote(buffer, attachment(action.data.attachment));
-          }
+  static format = (xs: any[]): string => {
+    let buffer = Buffer.alloc(0);
+    xs.forEach(({ list, cards }) => {
+      if (this.accept(list.name)) {
+        this.h1(buffer, list.name);
+        cards.forEach(({ card, members, actions }: { card: CardType, members: Array<MemberType>, actions: Array<CardActionType> }) => {
+          let card_members = members.map(this.avatar).join(" ");
+
+          this.h2(
+            buffer,
+            `[:link:](${card.url}) ${card.name} ${card_members}`
+          );
+          this.quote(buffer, card.desc);
+          actions.forEach((action) => {
+            const member = action.idMemberCreator; // FIXME
+            this.quote(buffer, "----");
+            if (member) {
+              this.quote(buffer, `${this.avatar(member)} ${action.date}`);
+            }
+            if (action.data.text) {
+              this.quote(buffer, action.data.text);
+            }
+            if (action.data.attachment) {
+              this.quote(buffer, this.attachment(action.data.attachment));
+            }
+          });
         });
-      });
-    }
-  });
-  return buffer.toString();
-};
+      }
+    });
+    return buffer.toString();
+  };
+
+}

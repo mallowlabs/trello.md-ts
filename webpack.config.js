@@ -22,7 +22,7 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".js"],
   },
-  plugins: [
-    new CopyPlugin({patterns: [{ from: ".", to: "../", context: "public" }] })
-  ],
+  // plugins: [
+  //   new CopyPlugin({patterns: [{ from: ".", to: "../", context: "images" }] })
+  // ],
 };

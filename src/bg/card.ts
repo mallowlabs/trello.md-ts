@@ -1,4 +1,7 @@
-type action = {
+import { Trello } from "trello-web";
+import { Json } from "./json";
+
+export type CardActionType = {
   idMemberCreator: string;
   date: string;
   data: {
@@ -10,20 +13,23 @@ type action = {
   };
 };
 
-type t = {
+export type CardType = {
   id: string;
   name: string;
   desc: string;
   url: string;
   idMembers: Array<string>;
-  actions: Array<action>;
+  actions: Array<CardActionType>;
 };
 
-let coerce = (json: any): t => json;
+export class Card {
+  static coerce = (json: any): CardType => json;
 
-let fetch = (client: any, id: string) => {
-  let url = `/1/boards/${id}/cards?actions=commentCard,addAttachmentToCard`;
-  return Trello.get(client, url).then((response) =>
-    Json.decodeList(coerce, response)
-  );
-};
+  static fetch = (client: any, id: string) => {
+    let url = `/1/boards/${id}/cards?actions=commentCard,addAttachmentToCard`;
+    return Trello.get(client, url).then((response: any) =>
+      Json.decodeList(this.coerce, response)
+    );
+  };
+}
+

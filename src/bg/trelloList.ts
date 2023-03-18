@@ -1,13 +1,20 @@
-type t = {
+import { Trello } from "trello-web";
+import { Json } from "./json";
+
+export type TrelloListType = {
   name: string;
   cards: { id: string; idMembers: string[] }[];
 };
 
-let coerce = (json: any): t => json as t;
+export class TrelloList {
 
-let fetch = (client: any, id: string): Promise<t[]> => {
-  let url = sprintf("/1/boards/%s/lists?cards=open", id);
-  return Trello.get(client, url).then((response) =>
-    Json.decodeList(coerce, response)
-  );
-};
+  static coerce = (json: any): TrelloListType => json as TrelloListType;
+
+  static fetch = (client: any, id: string): Promise<TrelloListType[]> => {
+    let url = `/1/boards/${id}/lists?cards=open`;
+    return Trello.get(client, url).then((response: any) =>
+      Json.decodeList(this.coerce, response)
+    );
+  };
+
+}
