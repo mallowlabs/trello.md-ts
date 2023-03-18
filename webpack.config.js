@@ -1,10 +1,28 @@
-var path = require('path');
+const path = require("path");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-  entry: "./lib/js/src/bg/index.js",
-  devtool: "inline-source-map",
+  mode: process.env.NODE_ENV || "development",
+  entry: {
+    background: path.join(__dirname, "src/bg/index.ts"),
+  },
   output: {
-    path: __dirname + "/extension/js",
-    filename: "bg.bundle.js"
-  }
+    path: path.join(__dirname, "extension/js"),
+    filename: "bg.bundle.js",
+  },
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
+      },
+    ],
+  },
+  resolve: {
+    extensions: [".ts", ".js"],
+  },
+  plugins: [
+    new CopyPlugin([{ from: ".", to: "../" }], { context: "public" })
+  ],
 };
