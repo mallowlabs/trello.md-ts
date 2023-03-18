@@ -10,7 +10,7 @@ import { Clipboard } from "./clipboard";
 let domain = new RegExp("trello[.]com/b/");
 let app_key = "d79e101f262c8b20de7993cdc98cd5b2";
 
-let show_if_trello = (tab_id: number, _: any, tab: chrome.tabs.Tab) => {
+let show_if_trello = (tab_id: number, _: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => {
   let url = tab.url;
   if (url && domain.test(url)) {
     chrome.pageAction.show(tab_id);
