@@ -21,7 +21,6 @@
     "trello-browser": "^0.0.6"
   },
   "devDependencies": {
-    "typescript": "^5.0.2",
-    "webpack": "^2.6.1"
+    "typescript": "^5.0.2"
   }
 }
