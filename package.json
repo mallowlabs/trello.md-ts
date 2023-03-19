@@ -5,6 +5,12 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
+    "lint": "run-p lint:*",
+    "lint:prettier": "prettier --check src/",
+    "lint:eslint": "eslint --ext .ts src/",
+    "fix": "run-p fix:*",
+    "fix:prettier": "prettier -w src/",
+    "fix:eslint": "npm run lint:eslint -- --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
