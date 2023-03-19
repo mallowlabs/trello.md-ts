@@ -8,6 +8,7 @@ npm-debug.log*
 # build output
 /lib
 /extension/js/bg.bundle.js
+/extension/js/bg.bundle.js.map
 .merlin
 *.pem
 *.crx

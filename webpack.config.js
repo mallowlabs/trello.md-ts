@@ -1,8 +1,9 @@
 const path = require("path");
-const CopyPlugin = require("copy-webpack-plugin");
+// const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   mode: process.env.NODE_ENV || "development",
+  devtool: "cheap-module-source-map",
   entry: {
     background: path.join(__dirname, "src/bg/index.ts"),
   },
