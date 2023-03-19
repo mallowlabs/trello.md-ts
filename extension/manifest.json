@@ -17,11 +17,13 @@
     "default_title": "Trello.md"
   },
   "options_ui": {
+    "open_in_tab": true,
     "page": "options/index.html"
   },
   "permissions": [
     "clipboardWrite",
-    "storage"
+    "storage",
+    "scripting"
   ],
   "host_permissions": [
     "https://trello.com/"

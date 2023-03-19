@@ -1,4 +1,5 @@
 import Trello from "trello-web";
+import { trelloAppKey } from "../appkey";
 import { Board } from "./board";
 import { Card } from "./card";
 import { Clipboard } from "./clipboard";
@@ -7,40 +8,15 @@ import { Markdown } from "./markdown";
 import { Member } from "./member";
 import { TrelloList } from "./trelloList";
 
-const domain = new RegExp("trello[.]com/b/");
-const appKey = "d79e101f262c8b20de7993cdc98cd5b2";
-
-const showIfTrello = (
-  tabId: number,
-  _: chrome.tabs.TabChangeInfo,
-  tab: chrome.tabs.Tab
-) => {
-  const url = tab.url;
-  if (url && domain.test(url)) {
-    chrome.pageAction.show(tabId);
-  }
-};
-
 const createTrello = (): Promise<Trello> => {
   return chrome.storage.local.get(["token"]).then((result) => {
-    const token = result.value;
+    const token = result.token;
     if (token) {
-      const client = new Trello(appKey, token);
+      const client = new Trello(trelloAppKey, token);
       return Promise.resolve(client);
     } else {
-      const client = new Trello(appKey);
-      return client
-        .auth({
-          name: "Trello.md",
-          expiration: "never",
-          scope: { read: true, write: false, account: false },
-        })
-        .then(() => {
-          return chrome.storage.local.set({ token: client.token || "" });
-        })
-        .then(() => {
-          return Promise.resolve(client);
-        });
+      chrome.runtime.openOptionsPage();
+      return Promise.reject("Token required");
     }
   });
 };
@@ -70,9 +46,9 @@ const copyToClipboard = async (tab: chrome.tabs.Tab) => {
       return Promise.resolve(ListWithCard.make({ lists, cards, members }));
     })
     .then((x: Array<ListDetailType>) => Promise.resolve(Markdown.format(x)))
-    .then((s: string) => Clipboard.write(document, s))
+    .then((s: string) => Clipboard.write(tab.id || 0, s))
     .then(() => {
-      chrome.pageAction.setIcon({
+      chrome.action.setIcon({
         tabId: tab.id || 0,
         path: "../icons/icon19.png",
       });
@@ -80,5 +56,4 @@ const copyToClipboard = async (tab: chrome.tabs.Tab) => {
     .catch(console.error);
 };
 
-chrome.tabs.onUpdated.addListener(showIfTrello);
 chrome.action.onClicked.addListener(copyToClipboard);
