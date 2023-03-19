@@ -1,7 +1,7 @@
 {
   "name": "Trello.md",
   "version": "1.1.0",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "description": "Copy trello board information to clipboard as markdown format.",
   "homepage_url": "http://github.com/mzp/trello.md",
   "icons": {
@@ -11,15 +11,17 @@
   },
   "default_locale": "en",
   "background": {
-    "page": "js/bg.html",
-    "persistent": true
+    "service_worker": "js/bg.bundle.js"
   },
-  "page_action": {
+  "action": {
     "default_icon": "icons/icon19.png",
     "default_title": "Trello.md"
   },
   "permissions": [
     "clipboardWrite",
-    "https://trello.com/*"
+    "storage"
+  ],
+  "host_permissions": [
+    "https://trello.com/"
   ]
 }

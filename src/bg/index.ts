@@ -17,26 +17,29 @@ let show_if_trello = (tab_id: number, _: chrome.tabs.TabChangeInfo, tab: chrome.
   }
 };
 
-let create_trello = () => {
-  let token = localStorage.getItem("token");
-  if (token) {
-    let client = new Trello(app_key, token);
-    return Promise.resolve(client);
-  } else {
-    const client = new Trello(app_key);
-    return client.auth({
-      name: "Trello.md",
-      expiration: "never",
-      scope: { read: true, write: false, account: false }
-    }).then(() => {
-      localStorage.setItem("token", client.token || "");
+let create_trello = (): Promise<Trello> => {
+  return chrome.storage.local.get(["token"]).then((result) => {
+    const token = result.value;
+    if (token) {
+      let client = new Trello(app_key, token);
       return Promise.resolve(client);
-    });
-  }
+    } else {
+      const client = new Trello(app_key);
+      return client.auth({
+        name: "Trello.md",
+        expiration: "never",
+        scope: { read: true, write: false, account: false }
+      }).then(() => {
+        return chrome.storage.local.set({ "token": client.token || "" });
+      }).then(() => {
+        return Promise.resolve(client);
+      });
+    }
+  });
 };
 
 let copy_to_clipboard = async (tab: chrome.tabs.Tab) => {
-  chrome.pageAction.setIcon({
+  chrome.action.setIcon({
     tabId: tab.id || 0,
     path: "../icons/executing.png"
   });
@@ -54,9 +57,9 @@ let copy_to_clipboard = async (tab: chrome.tabs.Tab) => {
           ]);
         }
       }
-      return Promise.resolve([ [], [], [] ]);
+      return Promise.resolve([[], [], []]);
     })
-    .then(([ lists, cards, members ]) => {
+    .then(([lists, cards, members]) => {
       return Promise.resolve(ListWithCard.make({ lists, cards, members }));
     })
     .then((x: Array<ListDetailType>) => Promise.resolve(Markdown.format(x)))
@@ -71,4 +74,4 @@ let copy_to_clipboard = async (tab: chrome.tabs.Tab) => {
 };
 
 chrome.tabs.onUpdated.addListener(show_if_trello);
-chrome.pageAction.onClicked.addListener(copy_to_clipboard);
+chrome.action.onClicked.addListener(copy_to_clipboard);
