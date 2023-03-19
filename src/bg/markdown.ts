@@ -2,35 +2,35 @@ import { ListDetailType } from "./listWithCard";
 import { MemberType } from "./member";
 
 export class Markdown {
-  static h1 = (buffer: Buffer, title: string): void => {
+  private static h1 = (buffer: Buffer, title: string): void => {
     buffer.write("# " + title + "\n\n");
   };
-  static h2 = (buffer: Buffer, title: string): void => {
+  private static h2 = (buffer: Buffer, title: string): void => {
     buffer.write("## " + title + "\n\n");
   };
-  static quote = (buffer: Buffer, text: string): void => {
+  private static quote = (buffer: Buffer, text: string): void => {
     const s = text.replace(/\n/g, "\n> ");
     buffer.write("> " + s + "\n\n");
   };
 
-  static avatarUrl = (hash: string): string =>
+  private static avatarUrl = (hash: string): string =>
     `https://trello-avatars.s3.amazonaws.com/${hash}/30.png`;
 
-  static avatar = (member: MemberType): string => {
+  private static avatar = (member: MemberType): string => {
     const hash = member.avatarHash ?? null;
     return hash
       ? `![${member.username}](${this.avatarUrl(hash)})`
       : member.username;
   };
 
-  static attachment = (obj: { url?: string; name: string }): string => {
+  private static attachment = (obj: { url?: string; name: string }): string => {
     const url = obj.url ?? "";
     return `![${obj.name}](${url})`;
   };
 
-  static regexp = /_$/;
+  private static regexp = /_$/;
 
-  static accept = (name: string): boolean => {
+  private static accept = (name: string): boolean => {
     const except = this.regexp.test(name);
     return !except;
   };

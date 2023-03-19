@@ -13,7 +13,7 @@ export type ListDetailType = {
 };
 
 export class ListWithCard {
-  static tablize = <T>(f: (x: T) => string, xs: T[]): Record<string, T> => {
+  private static tablize = <T>(f: (x: T) => string, xs: T[]): Record<string, T> => {
     const tbl = {} as Record<string, T>;
     xs.forEach((x) => {
       tbl[f(x)] = x;
@@ -21,22 +21,18 @@ export class ListWithCard {
     return tbl;
   };
 
-  static filterMap = <T, U>(f: (x: T) => U | null, xs: T[]): U[] => {
-    return xs.flatMap((x) => f(x) ?? []);
-  };
-
-  static find = <T>(tbl: Record<string, T>, x: string): T | null => {
+  private static find = <T>(tbl: Record<string, T>, x: string): T | null => {
     return tbl[x] ?? null;
   };
 
-  static tuplize(
+  private static tuplize(
     action: CardActionType,
     member: MemberType | null
   ): [CardActionType, MemberType | null] {
     return [action, member];
   }
 
-  static makeCard = (
+  private static makeCard = (
     cardTable: Record<string, CardType>,
     memberTable: Record<string, MemberType>,
     card: CardType
@@ -51,7 +47,7 @@ export class ListWithCard {
     return { card: c, members, actions };
   };
 
-  static makeList = (
+  private static makeList = (
     cardTable: Record<string, CardType>,
     memberTable: Record<string, MemberType>,
     list: TrelloListType
