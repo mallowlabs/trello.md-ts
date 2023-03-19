@@ -8,14 +8,12 @@ export type TrelloListType = {
 };
 
 export class TrelloList {
-
   static coerce = (json: any): TrelloListType => json as TrelloListType;
 
   static fetch = (client: Trello, id: string): Promise<TrelloListType[]> => {
-    let url = `/1/boards/${id}/lists?cards=open`;
-    return client.get(url).then((response: any) =>
-      Json.decodeList(this.coerce, response)
-    );
+    const url = `/1/boards/${id}/lists?cards=open`;
+    return client
+      .get(url)
+      .then((response: any) => Json.decodeList(this.coerce, response));
   };
-
 }

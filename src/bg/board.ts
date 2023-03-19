@@ -2,9 +2,9 @@ export class Board {
   static regexp = new RegExp("trello[.]com/b/([^/]+)");
 
   static parse_url(url: string) {
-    let result = this.regexp.exec(url);
+    const result = this.regexp.exec(url);
     if (result) {
-      let xs = result;
+      const xs = result;
       if (xs.length >= 2) {
         return xs[1];
       } else {
@@ -13,6 +13,5 @@ export class Board {
     } else {
       return null;
     }
-  };
-
+  }
 }

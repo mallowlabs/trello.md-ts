@@ -7,53 +7,60 @@ import { Markdown } from "./markdown";
 import { Member } from "./member";
 import { TrelloList } from "./trelloList";
 
-let domain = new RegExp("trello[.]com/b/");
-let app_key = "d79e101f262c8b20de7993cdc98cd5b2";
+const domain = new RegExp("trello[.]com/b/");
+const app_key = "d79e101f262c8b20de7993cdc98cd5b2";
 
-let show_if_trello = (tab_id: number, _: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => {
-  let url = tab.url;
+const show_if_trello = (
+  tab_id: number,
+  _: chrome.tabs.TabChangeInfo,
+  tab: chrome.tabs.Tab
+) => {
+  const url = tab.url;
   if (url && domain.test(url)) {
     chrome.pageAction.show(tab_id);
   }
 };
 
-let create_trello = (): Promise<Trello> => {
+const create_trello = (): Promise<Trello> => {
   return chrome.storage.local.get(["token"]).then((result) => {
     const token = result.value;
     if (token) {
-      let client = new Trello(app_key, token);
+      const client = new Trello(app_key, token);
       return Promise.resolve(client);
     } else {
       const client = new Trello(app_key);
-      return client.auth({
-        name: "Trello.md",
-        expiration: "never",
-        scope: { read: true, write: false, account: false }
-      }).then(() => {
-        return chrome.storage.local.set({ "token": client.token || "" });
-      }).then(() => {
-        return Promise.resolve(client);
-      });
+      return client
+        .auth({
+          name: "Trello.md",
+          expiration: "never",
+          scope: { read: true, write: false, account: false },
+        })
+        .then(() => {
+          return chrome.storage.local.set({ token: client.token || "" });
+        })
+        .then(() => {
+          return Promise.resolve(client);
+        });
     }
   });
 };
 
-let copy_to_clipboard = async (tab: chrome.tabs.Tab) => {
+const copy_to_clipboard = async (tab: chrome.tabs.Tab) => {
   chrome.action.setIcon({
     tabId: tab.id || 0,
-    path: "../icons/executing.png"
+    path: "../icons/executing.png",
   });
 
   create_trello()
     .then((client) => {
-      let url = tab.url;
+      const url = tab.url;
       if (url) {
-        let id = Board.parse_url(url);
+        const id = Board.parse_url(url);
         if (id) {
           return Promise.all<Array<any>>([
             TrelloList.fetch(client, id),
             Card.fetch(client, id),
-            Member.fetch(client, id)
+            Member.fetch(client, id),
           ]);
         }
       }
@@ -67,7 +74,7 @@ let copy_to_clipboard = async (tab: chrome.tabs.Tab) => {
     .then(() => {
       chrome.pageAction.setIcon({
         tabId: tab.id || 0,
-        path: "../icons/icon19.png"
+        path: "../icons/icon19.png",
       });
     })
     .catch(console.error);

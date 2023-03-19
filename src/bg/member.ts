@@ -11,11 +11,9 @@ export class Member {
   static coerce = (json: any): MemberType => json as MemberType;
 
   static fetch = (client: Trello, id: string): Promise<MemberType[]> => {
-    let url = `/1/boards/${id}/members?fields=all`;
-    return client.get(url).then((response: any) =>
-      Json.decodeList(this.coerce, response)
-    );
+    const url = `/1/boards/${id}/members?fields=all`;
+    return client
+      .get(url)
+      .then((response: any) => Json.decodeList(this.coerce, response));
   };
-
 }
-
