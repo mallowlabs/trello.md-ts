@@ -8,16 +8,16 @@ import { Member } from "./member";
 import { TrelloList } from "./trelloList";
 
 const domain = new RegExp("trello[.]com/b/");
-const app_key = "d79e101f262c8b20de7993cdc98cd5b2";
+const appKey = "d79e101f262c8b20de7993cdc98cd5b2";
 
 const showIfTrello = (
-  tab_id: number,
+  tabId: number,
   _: chrome.tabs.TabChangeInfo,
   tab: chrome.tabs.Tab
 ) => {
   const url = tab.url;
   if (url && domain.test(url)) {
-    chrome.pageAction.show(tab_id);
+    chrome.pageAction.show(tabId);
   }
 };
 
@@ -25,10 +25,10 @@ const createTrello = (): Promise<Trello> => {
   return chrome.storage.local.get(["token"]).then((result) => {
     const token = result.value;
     if (token) {
-      const client = new Trello(app_key, token);
+      const client = new Trello(appKey, token);
       return Promise.resolve(client);
     } else {
-      const client = new Trello(app_key);
+      const client = new Trello(appKey);
       return client
         .auth({
           name: "Trello.md",

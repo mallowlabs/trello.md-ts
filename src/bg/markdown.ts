@@ -41,9 +41,9 @@ export class Markdown {
       if (this.accept(list.name)) {
         this.h1(buffer, list.name);
         cards.forEach(({ card, members, actions }) => {
-          const card_members = members.map(this.avatar).join(" ");
+          const cardMembers = members.map(this.avatar).join(" ");
 
-          this.h2(buffer, `[:link:](${card.url}) ${card.name} ${card_members}`);
+          this.h2(buffer, `[:link:](${card.url}) ${card.name} ${cardMembers}`);
           this.quote(buffer, card.desc);
           actions.forEach(([action, member]) => {
             this.quote(buffer, "----");

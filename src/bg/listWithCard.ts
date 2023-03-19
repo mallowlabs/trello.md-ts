@@ -37,27 +37,27 @@ export class ListWithCard {
   }
 
   static makeCard = (
-    card_table: Record<string, CardType>,
-    member_table: Record<string, MemberType>,
+    cardTable: Record<string, CardType>,
+    memberTable: Record<string, MemberType>,
     card: CardType
   ): CardDetailType => {
-    const c = card_table[card.id];
+    const c = cardTable[card.id];
     const members = card.idMembers
-      .map((id) => this.find(member_table, id))
+      .map((id) => this.find(memberTable, id))
       .filter((item): item is NonNullable<typeof item> => item != null);
     const actions = c.actions.map((action) =>
-      this.tuplize(action, this.find(member_table, action.idMemberCreator))
+      this.tuplize(action, this.find(memberTable, action.idMemberCreator))
     );
     return { card: c, members, actions };
   };
 
   static makeList = (
-    card_table: Record<string, CardType>,
-    member_table: Record<string, MemberType>,
+    cardTable: Record<string, CardType>,
+    memberTable: Record<string, MemberType>,
     list: TrelloListType
   ): { list: TrelloListType; cards: Array<CardDetailType> } => {
     const cards = list.cards.map((card) =>
-      this.makeCard(card_table, member_table, card)
+      this.makeCard(cardTable, memberTable, card)
     );
     return { list, cards };
   };
@@ -71,8 +71,8 @@ export class ListWithCard {
     cards: CardType[];
     members: MemberType[];
   }): ListDetailType[] => {
-    const card_table = this.tablize((x) => x.id, cards);
-    const member_table = this.tablize((x) => x.id, members);
-    return lists.map((list) => this.makeList(card_table, member_table, list));
+    const cardTable = this.tablize((x) => x.id, cards);
+    const memberTable = this.tablize((x) => x.id, members);
+    return lists.map((list) => this.makeList(cardTable, memberTable, list));
   };
 }
