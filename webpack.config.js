@@ -6,11 +6,12 @@ module.exports = {
   mode: process.env.NODE_ENV || "development",
   devtool: "cheap-module-source-map",
   entry: {
-    background: path.join(__dirname, "src/bg/index.ts"),
+    "js/bg": path.join(__dirname, "src/bg/index.ts"),
+    "options/options": path.join(__dirname, "src/options/index.ts"),
   },
   output: {
-    path: path.join(__dirname, "extension/js"),
-    filename: "bg.bundle.js",
+    path: path.join(__dirname, "extension/"),
+    filename: "[name].bundle.js",
   },
   module: {
     rules: [

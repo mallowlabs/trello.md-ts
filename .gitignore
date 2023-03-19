@@ -9,6 +9,8 @@ npm-debug.log*
 /lib
 /extension/js/bg.bundle.js
 /extension/js/bg.bundle.js.map
+/extension/options/options.bundle.js
+/extension/options/options.bundle.js.map
 .merlin
 *.pem
 *.crx
