@@ -1,4 +1,4 @@
-import { Trello } from "trello-web";
+import Trello from "trello-web";
 import { CardType } from "./card";
 import { Json } from "./json";
 

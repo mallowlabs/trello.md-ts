@@ -1,4 +1,4 @@
-import { Trello } from "trello-web";
+import Trello from "trello-web";
 import { Json } from "./json";
 
 export type MemberType = {

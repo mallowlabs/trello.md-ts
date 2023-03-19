@@ -13,7 +13,7 @@ declare module "trello-web" {
     token: string;
     [name: string]: any;
   }
-  export class Trello {
+  class Trello {
     key: string;
     token?: string;
     constructor(key: string, token?: string);
@@ -24,4 +24,5 @@ declare module "trello-web" {
     post: (path: string, data?: Partial<DataType>) => Promise<any>;
     put: (path: string, data?: Partial<DataType>) => Promise<any>;
   }
+  export default Trello;
 }
