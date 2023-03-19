@@ -1,4 +1,4 @@
-import { CardActionType, CardType } from "./card";
+import { ListDetailType } from "./listWithCard";
 import { MemberType } from "./member";
 
 export class Markdown {
@@ -17,14 +17,14 @@ export class Markdown {
   static avatarUrl = (hash: string): string =>
     `https://trello-avatars.s3.amazonaws.com/${hash}/30.png`;
 
-  static avatar = (member: any): string => {
+  static avatar = (member: MemberType): string => {
     let hash = member.avatarHash ?? null;
     return hash
       ? `![${member.username}](${this.avatarUrl(hash)})`
       : member.username;
   };
 
-  static attachment = (obj: any): string => {
+  static attachment = (obj: { url?: string, name: string}): string => {
     let url = obj.url ?? "";
     return `![${obj.name}](${url})`;
   };
@@ -36,12 +36,12 @@ export class Markdown {
     return !except;
   };
 
-  static format = (xs: any[]): string => {
+  static format = (xs: ListDetailType[]): string => {
     let buffer = Buffer.alloc(0);
     xs.forEach(({ list, cards }) => {
       if (this.accept(list.name)) {
         this.h1(buffer, list.name);
-        cards.forEach(({ card, members, actions }: { card: CardType, members: Array<MemberType>, actions: Array<CardActionType> }) => {
+        cards.forEach(({ card, members, actions }) => {
           let card_members = members.map(this.avatar).join(" ");
 
           this.h2(
@@ -49,8 +49,7 @@ export class Markdown {
             `[:link:](${card.url}) ${card.name} ${card_members}`
           );
           this.quote(buffer, card.desc);
-          actions.forEach((action) => {
-            const member = action.idMemberCreator; // FIXME
+          actions.forEach(([action, member]) => {
             this.quote(buffer, "----");
             if (member) {
               this.quote(buffer, `${this.avatar(member)} ${action.date}`);

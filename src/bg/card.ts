@@ -25,9 +25,9 @@ export type CardType = {
 export class Card {
   static coerce = (json: any): CardType => json;
 
-  static fetch = (client: any, id: string) => {
+  static fetch = (client: Trello, id: string) => {
     let url = `/1/boards/${id}/cards?actions=commentCard,addAttachmentToCard`;
-    return Trello.get(client, url).then((response: any) =>
+    return client.get(url).then((response: any) =>
       Json.decodeList(this.coerce, response)
     );
   };
