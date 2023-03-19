@@ -10,7 +10,7 @@ import { TrelloList } from "./trelloList";
 const domain = new RegExp("trello[.]com/b/");
 const app_key = "d79e101f262c8b20de7993cdc98cd5b2";
 
-const show_if_trello = (
+const showIfTrello = (
   tab_id: number,
   _: chrome.tabs.TabChangeInfo,
   tab: chrome.tabs.Tab
@@ -21,7 +21,7 @@ const show_if_trello = (
   }
 };
 
-const create_trello = (): Promise<Trello> => {
+const createTrello = (): Promise<Trello> => {
   return chrome.storage.local.get(["token"]).then((result) => {
     const token = result.value;
     if (token) {
@@ -45,17 +45,17 @@ const create_trello = (): Promise<Trello> => {
   });
 };
 
-const copy_to_clipboard = async (tab: chrome.tabs.Tab) => {
+const copyToClipboard = async (tab: chrome.tabs.Tab) => {
   chrome.action.setIcon({
     tabId: tab.id || 0,
     path: "../icons/executing.png",
   });
 
-  create_trello()
+  createTrello()
     .then((client) => {
       const url = tab.url;
       if (url) {
-        const id = Board.parse_url(url);
+        const id = Board.parseUrl(url);
         if (id) {
           return Promise.all<Array<any>>([
             TrelloList.fetch(client, id),
@@ -80,5 +80,5 @@ const copy_to_clipboard = async (tab: chrome.tabs.Tab) => {
     .catch(console.error);
 };
 
-chrome.tabs.onUpdated.addListener(show_if_trello);
-chrome.action.onClicked.addListener(copy_to_clipboard);
+chrome.tabs.onUpdated.addListener(showIfTrello);
+chrome.action.onClicked.addListener(copyToClipboard);

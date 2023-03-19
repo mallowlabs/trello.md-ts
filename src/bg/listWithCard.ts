@@ -5,9 +5,7 @@ import type { TrelloListType } from "./trelloList";
 export type CardDetailType = {
   card: CardType;
   members: Array<MemberType>;
-  actions: Array<
-    [CardActionType, MemberType | null]
-  > /*[CardActionType, MemberType | null][];*/;
+  actions: Array<[CardActionType, MemberType | null]>;
 };
 export type ListDetailType = {
   list: TrelloListType;
@@ -23,7 +21,7 @@ export class ListWithCard {
     return tbl;
   };
 
-  static filter_map = <T, U>(f: (x: T) => U | null, xs: T[]): U[] => {
+  static filterMap = <T, U>(f: (x: T) => U | null, xs: T[]): U[] => {
     return xs.flatMap((x) => f(x) ?? []);
   };
 
@@ -38,7 +36,7 @@ export class ListWithCard {
     return [action, member];
   }
 
-  static make_card = (
+  static makeCard = (
     card_table: Record<string, CardType>,
     member_table: Record<string, MemberType>,
     card: CardType
@@ -53,13 +51,13 @@ export class ListWithCard {
     return { card: c, members, actions };
   };
 
-  static make_list = (
+  static makeList = (
     card_table: Record<string, CardType>,
     member_table: Record<string, MemberType>,
     list: TrelloListType
   ): { list: TrelloListType; cards: Array<CardDetailType> } => {
     const cards = list.cards.map((card) =>
-      this.make_card(card_table, member_table, card)
+      this.makeCard(card_table, member_table, card)
     );
     return { list, cards };
   };
@@ -75,6 +73,6 @@ export class ListWithCard {
   }): ListDetailType[] => {
     const card_table = this.tablize((x) => x.id, cards);
     const member_table = this.tablize((x) => x.id, members);
-    return lists.map((list) => this.make_list(card_table, member_table, list));
+    return lists.map((list) => this.makeList(card_table, member_table, list));
   };
 }

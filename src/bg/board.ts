@@ -1,7 +1,7 @@
 export class Board {
   static regexp = new RegExp("trello[.]com/b/([^/]+)");
 
-  static parse_url(url: string) {
+  static parseUrl(url: string) {
     const result = this.regexp.exec(url);
     if (result) {
       const xs = result;
