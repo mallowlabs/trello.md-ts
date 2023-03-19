@@ -8,5 +8,8 @@ module.exports = {
   ],
   ignorePatterns: [
     "extension/js/*.js"
-  ]
+  ],
+  rules: {
+    "@typescript-eslint/no-explicit-any": "off"
+  }
 }
