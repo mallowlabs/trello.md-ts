@@ -16,6 +16,9 @@
     "default_icon": "icons/icon19.png",
     "default_title": "Trello.md"
   },
+  "options_ui": {
+    "page": "options/index.html"
+  },
   "permissions": [
     "clipboardWrite",
     "storage"
