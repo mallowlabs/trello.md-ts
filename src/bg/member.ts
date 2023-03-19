@@ -1,5 +1,4 @@
 import Trello from "trello-web";
-import { Json } from "./json";
 
 export type MemberType = {
   id: string;
@@ -8,12 +7,10 @@ export type MemberType = {
 };
 
 export class Member {
-  static coerce = (json: any): MemberType => json as MemberType;
-
   static fetch = (client: Trello, id: string): Promise<MemberType[]> => {
     const url = `/1/boards/${id}/members?fields=all`;
     return client
-      .get(url)
-      .then((response: any) => Json.decodeList(this.coerce, response));
+      .get(url, { fields: "all" })
+      .then((response: any) => response as Array<MemberType>);
   };
 }
