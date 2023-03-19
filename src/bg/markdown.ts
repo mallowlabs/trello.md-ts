@@ -13,13 +13,13 @@ export class Markdown {
     return (buffer += "> " + s + "\n\n");
   };
 
-  private static avatarUrl = (hash: string): string =>
-    `https://trello-avatars.s3.amazonaws.com/${hash}/30.png`;
+  private static avatarUrl = (id: string, hash: string): string =>
+    `https://trello-members.s3.amazonaws.com/${id}/${hash}/30.png`;
 
   private static avatar = (member: MemberType): string => {
     const hash = member.avatarHash ?? null;
     return hash
-      ? `![${member.username}](${this.avatarUrl(hash)})`
+      ? `![${member.username}](${this.avatarUrl(member.id, hash)})`
       : member.username;
   };
 
