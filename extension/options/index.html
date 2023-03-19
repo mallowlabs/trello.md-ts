@@ -18,12 +18,21 @@
         border: 1px solid #0747a6;
         cursor: pointer;
       }
+      .hide {
+        display: none;
+      }
     </style>
   </head>
   <body>
     <h1><img src="../icons/icon48.png">Trello.md</h1>
-    <p>You need to log in to Trello.</p>
-    <button id="login-link">Log in to Trello</button>
+    <div id="login-block" class="hide">
+      <p>You need to log in to Trello.</p>
+      <button id="login-link">Log in to Trello</button>
+    </div>
+    <div id="logout-block" class="hide">
+      <p>You are logging in.</p>
+      <button id="logout-link">Log out</button>
+    </div>
   </body>
   <script src="./options.bundle.js"></script>
 </html>
