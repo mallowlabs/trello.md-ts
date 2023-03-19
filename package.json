@@ -19,6 +19,11 @@
   "homepage": "https://github.com/mzp/trello.md#readme",
   "devDependencies": {
     "@types/chrome": "^0.0.224",
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
+    "@typescript-eslint/parser": "^5.55.0",
+    "eslint": "^8.36.0",
+    "eslint-config-prettier": "^8.7.0",
+    "prettier": "^2.8.4",
     "ts-loader": "^9.4.2",
     "typescript": "^5.0.2",
     "webpack": "^5.76.2",
