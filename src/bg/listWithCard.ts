@@ -13,7 +13,10 @@ export type ListDetailType = {
 };
 
 export class ListWithCard {
-  private static tablize = <T>(f: (x: T) => string, xs: T[]): Record<string, T> => {
+  private static tablize = <T>(
+    f: (x: T) => string,
+    xs: T[]
+  ): Record<string, T> => {
     const tbl = {} as Record<string, T>;
     xs.forEach((x) => {
       tbl[f(x)] = x;
