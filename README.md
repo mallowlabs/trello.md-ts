@@ -1,6 +1,6 @@
 # :clipboard: Trello.md-ts
 Copy trello board information to clipboard as markdown format.
-This is a TypeScript fork, original is [mzp/trello](https://github.com/mzp/trello.md/).
+This is a TypeScript fork, original is [mzp/trello.md](https://github.com/mzp/trello.md/).
 
 From trello board like this:
 
