@@ -47,13 +47,13 @@ const copyToClipboard = async (tab: chrome.tabs.Tab) => {
     })
     .then((x: Array<ListDetailType>) => Promise.resolve(Markdown.format(x)))
     .then((s: string) => Clipboard.write(tab.id || 0, s))
-    .then(() => {
+    .catch(console.error)
+    .finally(() => {
       chrome.action.setIcon({
         tabId: tab.id || 0,
         path: "../icons/icon19.png",
       });
-    })
-    .catch(console.error);
+    });
 };
 
 chrome.action.onClicked.addListener(copyToClipboard);
