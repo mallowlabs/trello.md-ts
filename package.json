@@ -1,8 +1,7 @@
 {
-  "name": "trello.md",
+  "name": "trello.md-ts",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Copy trello board information to clipboard as markdown format.",
   "scripts": {
     "build": "webpack --mode production",
     "lint": "run-p lint:*",
@@ -15,14 +14,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mzp/trello.md.git"
+    "url": "git+https://github.com/mallowlabs/trello.md-ts.git"
   },
-  "author": "mzp",
+  "author": "mallowlabs",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/mzp/trello.md/issues"
-  },
-  "homepage": "https://github.com/mzp/trello.md#readme",
+  "homepage": "https://github.com/mallowlabs/trello.md-ts#readme",
   "devDependencies": {
     "@types/chrome": "^0.0.224",
     "@typescript-eslint/eslint-plugin": "^5.55.0",

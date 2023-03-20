@@ -1,20 +1,20 @@
-# :clipboard: Trello.md
+# :clipboard: Trello.md-ts
 Copy trello board information to clipboard as markdown format.
+This is a TypeScript fork, original is [mzp/trello](https://github.com/mzp/trello.md/).
 
 From trello board like this:
 
-![](https://raw.githubusercontent.com/mzp/trello.md/master/images/trello.png)
+![](https://raw.githubusercontent.com/mallowlabs/trello.md-ts/master/images/trello.png)
 
 To markdown text like this:
 
-![](https://raw.githubusercontent.com/mzp/trello.md/master/images/markdown.png)
+![](https://raw.githubusercontent.com/mallowlabs/trello.md-ts/master/images/markdown.png)
 
 ## :wrench: Build
 
 ```sh
-docker-compose build
-docker-compose run app yarn
-docker-compose run app yarn build
+$ npm install
+$ npm run build
 ```
 
 And load unpack extension from `extension/`.
