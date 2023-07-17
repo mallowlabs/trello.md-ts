@@ -15,7 +15,7 @@ export type ListDetailType = {
 export class ListWithCard {
   private static tablize = <T>(
     f: (x: T) => string,
-    xs: T[]
+    xs: T[],
   ): Record<string, T> => {
     const tbl = {} as Record<string, T>;
     xs.forEach((x) => {
@@ -30,7 +30,7 @@ export class ListWithCard {
 
   private static tuplize(
     action: CardActionType,
-    member: MemberType | null
+    member: MemberType | null,
   ): [CardActionType, MemberType | null] {
     return [action, member];
   }
@@ -38,14 +38,14 @@ export class ListWithCard {
   private static makeCard = (
     cardTable: Record<string, CardType>,
     memberTable: Record<string, MemberType>,
-    card: CardType
+    card: CardType,
   ): CardDetailType => {
     const c = cardTable[card.id];
     const members = card.idMembers
       .map((id) => this.find(memberTable, id))
       .filter((item): item is NonNullable<typeof item> => item != null);
     const actions = c.actions.map((action) =>
-      this.tuplize(action, this.find(memberTable, action.idMemberCreator))
+      this.tuplize(action, this.find(memberTable, action.idMemberCreator)),
     );
     return { card: c, members, actions };
   };
@@ -53,10 +53,10 @@ export class ListWithCard {
   private static makeList = (
     cardTable: Record<string, CardType>,
     memberTable: Record<string, MemberType>,
-    list: TrelloListType
+    list: TrelloListType,
   ): { list: TrelloListType; cards: Array<CardDetailType> } => {
     const cards = list.cards.map((card) =>
-      this.makeCard(cardTable, memberTable, card)
+      this.makeCard(cardTable, memberTable, card),
     );
     return { list, cards };
   };
