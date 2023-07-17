@@ -1,6 +1,6 @@
 {
   "name": "Trello.md-ts",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "manifest_version": 3,
   "description": "Copy trello board information to clipboard as markdown format.",
   "homepage_url": "http://github.com/mallowlabs/trello.md-ts",
