@@ -1,6 +1,6 @@
 {
   "name": "trello.md-ts",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Copy trello board information to clipboard as markdown format.",
   "scripts": {
     "build": "webpack --mode production",
