@@ -51,9 +51,10 @@ export class Markdown {
           actions.forEach(([action, member]) => {
             buffer = this.quote(buffer, "----");
             if (member) {
+              const dateString = new Date(action.date).toLocaleString();
               buffer = this.quote(
                 buffer,
-                `${this.avatar(member)} ${action.date}`
+                `${this.avatar(member)} ${dateString}`
               );
             }
             if (action.data.text) {
