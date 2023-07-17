@@ -22,7 +22,7 @@ declare module "trello-web" {
     req: (
       method: string,
       path: string,
-      data?: Partial<DataType>
+      data?: Partial<DataType>,
     ) => Promise<any>;
     get: (path: string, data?: Partial<DataType>) => Promise<any>;
     head: (path: string, data?: Partial<DataType>) => Promise<any>;

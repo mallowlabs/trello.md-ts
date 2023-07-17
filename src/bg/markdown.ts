@@ -45,7 +45,7 @@ export class Markdown {
 
           buffer = this.h2(
             buffer,
-            `[:link:](${card.url}) ${card.name} ${cardMembers}`
+            `[:link:](${card.url}) ${card.name} ${cardMembers}`,
           );
           buffer = this.quote(buffer, card.desc);
           actions.forEach(([action, member]) => {
@@ -54,7 +54,7 @@ export class Markdown {
               const dateString = new Date(action.date).toLocaleString();
               buffer = this.quote(
                 buffer,
-                `${this.avatar(member)} ${dateString}`
+                `${this.avatar(member)} ${dateString}`,
               );
             }
             if (action.data.text) {
@@ -63,7 +63,7 @@ export class Markdown {
             if (action.data.attachment) {
               buffer = this.quote(
                 buffer,
-                this.attachment(action.data.attachment)
+                this.attachment(action.data.attachment),
               );
             }
           });
