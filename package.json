@@ -21,8 +21,8 @@
   "homepage": "https://github.com/mallowlabs/trello.md-ts#readme",
   "devDependencies": {
     "@types/chrome": "^0.0.262",
-    "@typescript-eslint/eslint-plugin": "^7.1.0",
-    "@typescript-eslint/parser": "^7.1.0",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "npm-run-all": "^4.1.5",
