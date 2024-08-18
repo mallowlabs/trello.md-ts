@@ -9,7 +9,7 @@ updates:
     groups:
       eslint:
         patterns:
-          - "@typescript-eslint/*"
+          - "typescript-eslint"
           - "eslint"
           - "eslint-*"
           - "prettier"
