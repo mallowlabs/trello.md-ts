@@ -20,7 +20,7 @@
   "license": "MIT",
   "homepage": "https://github.com/mallowlabs/trello.md-ts#readme",
   "devDependencies": {
-    "@types/chrome": "^0.0.300",
+    "@types/chrome": "^0.0.301",
     "eslint": "^9.19.0",
     "eslint-config-prettier": "^10.0.1",
     "npm-run-all": "^4.1.5",
