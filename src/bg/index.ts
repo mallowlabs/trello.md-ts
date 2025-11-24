@@ -10,7 +10,7 @@ import { TrelloList } from "./trelloList";
 
 const createTrello = (): Promise<Trello> => {
   return chrome.storage.local.get(["token"]).then((result) => {
-    const token = result.token;
+    const token = typeof result.token === "string" ? result.token : undefined;
     if (token) {
       const client = new Trello(trelloAppKey, token);
       return Promise.resolve(client);
