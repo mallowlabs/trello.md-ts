@@ -3,14 +3,14 @@ import { MemberType } from "./member";
 
 export class Markdown {
   private static h1 = (buffer: string, title: string): string => {
-    return (buffer += "# " + title + "\n\n");
+    return buffer + "# " + title + "\n\n";
   };
   private static h2 = (buffer: string, title: string): string => {
-    return (buffer += "## " + title + "\n\n");
+    return buffer + "## " + title + "\n\n";
   };
   private static quote = (buffer: string, text: string): string => {
     const s = text.replace(/\n/g, "\n> ");
-    return (buffer += "> " + s + "\n\n");
+    return buffer + "> " + s + "\n\n";
   };
 
   private static avatarUrl = (id: string, hash: string): string =>
