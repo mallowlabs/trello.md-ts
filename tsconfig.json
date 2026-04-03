@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
     "target": "es6",
+    "lib": ["es2018", "dom"],
     "module": "commonjs",
     "strict": true,
     "rootDir": "src",
     "esModuleInterop": true,
-    "typeRoots": [ "node_modules/@types"]
+    "typeRoots": [ "node_modules/@types"],
+    "types": ["chrome"]
   },
   "exclude": [
     "node_modules"
