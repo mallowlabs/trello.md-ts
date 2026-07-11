@@ -10,6 +10,7 @@
     "fix": "run-p fix:*",
     "fix:prettier": "prettier -w src/",
     "fix:eslint": "npm run lint:eslint -- --fix",
+    "typecheck": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
