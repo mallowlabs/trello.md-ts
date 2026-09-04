@@ -22,7 +22,7 @@
   "homepage": "https://github.com/mallowlabs/trello.md-ts#readme",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@types/chrome": "^0.2.7",
+    "@types/chrome": "^0.2.8",
     "@typescript/native": "npm:typescript@^7.0.2",
     "eslint": "^10.9.1",
     "eslint-config-prettier": "^10.1.8",
