@@ -13,7 +13,7 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v7
       with:
-        node-version-file: '/.node-version'
+        node-version-file: '.node-version'
         cache: 'npm'
     - name: Run build
       run: |
